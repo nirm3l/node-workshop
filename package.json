@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "denque": "^2.1.0",
+    "eventsource": "^2.0.2",
+    "express": "expressjs/express",
+    "express-actuator": "^1.8.2"
+  },
+  "devDependencies": {
+    "@types/express-actuator": "^1.8.0"
+  }
+}

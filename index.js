@@ -40,7 +40,7 @@ const getEvents = async (write, f, distinct=false, condition) => {
     const duplicationCheck = new Set()
 
     while (true) {
-        if (wikiRecords.length && lastEvent !== wikiRecords.peekFront()) {
+        if (wikiRecords.length && lastEvent !== wikiRecords.peekBack()) {
             let startIndex = 0;
 
             const records = wikiRecords.toArray();

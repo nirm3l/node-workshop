@@ -34,6 +34,20 @@ eventSource.onmessage = (event) => {
     }
 };
 
+const getNewRecords = (wikiRecords, lastEvent) => {
+    const recordsCopy = wikiRecords.toArray();
+
+    const records = [];
+
+    for (let i = recordsCopy.length - 1; i >= 0 && recordsCopy[i] !== lastEvent; i--) {
+        records.push(recordsCopy[i])
+    }
+
+    records.reverse();
+
+    return records;
+}
+
 const getEvents = async (write, f, distinct=false, condition) => {
     let lastEvent = null;
 
@@ -41,21 +55,7 @@ const getEvents = async (write, f, distinct=false, condition) => {
 
     while (true) {
         if (wikiRecords.length && lastEvent !== wikiRecords.peekBack()) {
-            let startIndex = 0;
-
-            const records = wikiRecords.toArray();
-
-            if (lastEvent != null) {
-                startIndex = records.indexOf(lastEvent);
-
-                if (startIndex < 0) {
-                    startIndex = 0;
-                }
-            }
-
-            for (let i = startIndex + 1; i < records.length; i++) {
-                const data = records[i];
-
+            for (const data of getNewRecords(wikiRecords, lastEvent)) {
                 if (!condition || condition(data)) {
                     const value = f(data);
 
